@@ -88,17 +88,9 @@ function Result() {
           >
             딥페이크 판별 결과
           </motion.h3>
-
-          {/* result 등이 없을 때 대체 문구로 처리 */}
-          <motion.p transition={{ delay: 0.7 }}>
-            <strong>결과:</strong> {result || '분석 결과 없음'}
-          </motion.p>
-          <motion.p transition={{ delay: 0.8 }}>
-            <strong>신뢰도:</strong> {confidence !== undefined ? `${confidence}%` : '데이터 없음'}
-          </motion.p>
-          <motion.p transition={{ delay: 0.9 }}>
-            <strong>설명:</strong> {explanation || '설명 정보 없음'}
-          </motion.p>
+          <motion.p transition={{ delay: 0.7 }}><strong>결과:</strong> {result}</motion.p>
+          <motion.p transition={{ delay: 0.8 }}><strong>신뢰도:</strong> {confidence}%</motion.p>
+          <motion.p transition={{ delay: 0.9 }}><strong>설명:</strong> {explanation}</motion.p>
         </motion.div>
       </div>
     </div>
