@@ -28,11 +28,14 @@ function Home() {
     setLoading(true);
     setError("");
 
+    const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/upload/', {
+      const response = await fetch(`${BASE_URL}/api/upload/`, {
         method: 'POST',
         body: formData,
       });
+
 
       const data = await response.json();
 
