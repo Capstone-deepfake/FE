@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 function Result() {
+  const BASE_URL = process.env.REACT_APP_API_BASE_URL;
   const location = useLocation();
   const navigate = useNavigate();
   const { fileUrl, result, confidence, explanation } = location.state || {};
@@ -82,8 +83,9 @@ function Result() {
           transition={{ delay: 0.2, duration: 0.6 }}
           style={{ marginBottom: '40px' }}
         >
+
           <video autoPlay muted controls width="720">
-            <source src={`http://127.0.0.1:8000${fileUrl}`} type="video/mp4" />
+            <source src={`${BASE_URL}${fileUrl}`} type="video/mp4" />
             브라우저가 video 태그를 지원하지 않습니다.
           </video>
         </motion.div>
@@ -104,7 +106,7 @@ function Result() {
           </motion.p>
 
           <motion.p style={{ fontWeight: 'bold', fontSize: '1.4rem', margin: '8px 0' }}>
-            신뢰도: <span style={{ fontWeight: '900' }}>{confidence}%</span>
+            신뢰도: <span style={{ fontWeight: '900' }}>{Number(confidence).toFixed(1)}%</span>
           </motion.p>
 
           <motion.p style={{ fontWeight: 'bold', fontSize: '1.4rem', display: 'inline-block', margin: '8px 0' }}>
