@@ -20,7 +20,7 @@ function Result() {
       } else {
         clearInterval(timer);
       }
-    }, 50);
+    }, 90);
     return () => clearInterval(timer);
   }, [index, cleanedExplanation]);
 
