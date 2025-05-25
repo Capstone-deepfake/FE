@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import './Intro.css';
+import bgImage from '../assets/intro-background.png';
 
 function Result() {
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -11,6 +13,7 @@ function Result() {
   const [displayedExplanation, setDisplayedExplanation] = useState("");
   const [index, setIndex] = useState(0);
   const cleanedExplanation = explanation?.replace('undefined', '').trim() || "";
+  const [showAbout, setShowAbout] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -24,11 +27,17 @@ function Result() {
     return () => clearInterval(timer);
   }, [index, cleanedExplanation]);
 
+  useEffect(() => {
+    document.body.style.overflow = showAbout ? 'hidden' : 'auto';
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [showAbout]);
+
   const resultColor = result === "Fake" ? 'red' : 'green';
 
   return (
-    <div>
-      {/* 상단 고정 바 - Home.jsx와 동일하게 유지 */}
+    <div style={{ minHeight: '100vh', paddingTop: '120px', overflowY: 'auto' }}>
       <div style={{
         position: 'fixed',
         top: 0,
@@ -51,46 +60,131 @@ function Result() {
           DE-fake it
         </motion.h2>
 
-        <motion.button
-          onClick={() => navigate('/')}
-          whileHover={{ scale: 1.05, backgroundColor: '#ffffff22' }}
-          style={{
-            backgroundColor: 'transparent',
-            border: '1px solid white',
-            color: 'white',
-            padding: '8px 16px',
-            borderRadius: '5px',
-            cursor: 'pointer',
-            transition: 'all 0.3s',
-            marginRight: '40px'
-          }}
-        >
-          🏠 Home
-        </motion.button>
+        <div style={{ display: 'flex', gap: '10px', marginRight: '40px' }}>
+          <motion.button
+            onClick={() => setShowAbout(true)}
+            whileHover={{ scale: 1.05, backgroundColor: '#ffffff22' }}
+            style={{
+              backgroundColor: 'transparent',
+              border: '1px solid white',
+              color: 'white',
+              padding: '8px 16px',
+              borderRadius: '5px',
+              cursor: 'pointer',
+              transition: 'all 0.3s'
+            }}
+          >
+            About Us
+          </motion.button>
+
+          <motion.button
+            onClick={() => navigate('/')}
+            whileHover={{ scale: 1.05, backgroundColor: '#ffffff22' }}
+            style={{
+              backgroundColor: 'transparent',
+              border: '1px solid white',
+              color: 'white',
+              padding: '8px 16px',
+              borderRadius: '5px',
+              cursor: 'pointer',
+              transition: 'all 0.3s'
+            }}
+          >
+            🏠 Home
+          </motion.button>
+        </div>
       </div>
 
-      {/* 본문 내용 */}
-      <div style={{
-        marginTop: '120px',
-        padding: '40px',
-        textAlign: 'center',
-        fontSize: '1.4rem'
-      }}>
-        {/* 영상 */}
+      {showAbout && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundColor: 'rgba(0, 0, 0, 0.3)',
+          zIndex: 1500,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }} onClick={() => setShowAbout(false)}>
+          <div style={{
+            position: 'relative',
+            width: '95%',
+            maxWidth: '960px',
+            maxHeight: '90vh',
+            overflowY: 'auto',
+            backgroundColor: '#f0f0f0',
+            color: '#000',
+            padding: '30px 20px',
+            borderRadius: '20px',
+            zIndex: 2000,
+            boxShadow: '0 0 20px rgba(0,0,0,0.5)'
+          }} onClick={(e) => e.stopPropagation()}>
+            <div
+              style={{
+                position: 'absolute',
+                top: '12px',
+                right: '16px',
+                fontSize: '24px',
+                color: '#666',
+                cursor: 'pointer',
+                transition: 'color 0.2s ease'
+              }}
+              onMouseEnter={e => e.target.style.color = '#000'}
+              onMouseLeave={e => e.target.style.color = '#666'}
+              onClick={() => setShowAbout(false)}
+            >
+              ✖
+            </div>
+            <div style={{ maxWidth: '900px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
+              <h1>🔎 <span style={{ color: '#000' }}>DE-fake it</span></h1>
+              <p>
+                본 시스템은 다양한 딥페이크 탐지 모델을 비교하여 정확한 판별을 제공합니다.<br />
+                아래 표는 주요 모델의 정확도와 특성을 요약한 것입니다.
+              </p>
+              <table>
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>XceptionNet</th>
+                    <th>MesoNet</th>
+                    <th>EfficientNet</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>정확도</td>
+                    <td>91%</td>
+                    <td>84%</td>
+                    <td>88%</td>
+                  </tr>
+                  <tr>
+                    <td>특징</td>
+                    <td>CNN 기반, 강력한 정확도</td>
+                    <td>경량 모델, 실시간 처리에 적합</td>
+                    <td>최적화 구조, 속도/성능 균형</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div style={{ padding: '40px', textAlign: 'center', fontSize: '1.4rem' }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
           style={{ marginBottom: '40px' }}
         >
-
           <video autoPlay muted controls width="720">
             <source src={`${BASE_URL}${fileUrl}`} type="video/mp4" />
             브라우저가 video 태그를 지원하지 않습니다.
           </video>
         </motion.div>
 
-        {/* 결과 내용 */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
