@@ -15,8 +15,10 @@ function FileUpload() {
     const formData = new FormData();
     formData.append('file', file);
 
+    const BASE_URL = process_params.env.REACT_APP_API_BASE_URL;
+
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/upload/', formData, {
+      const response = await axios.post('${BASE_URL}/api/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setVideoId(response.data.video_id);  // video_id를 받아옴
