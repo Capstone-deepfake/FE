@@ -340,7 +340,7 @@ function Home() {
               </motion.button>
 
               <p style={{ fontSize: '0.85rem', color: 'red', marginTop: '12px' }}>
-                * 업로드할 수 있는 영상 크기는 100MB 이하만 가능합니다!
+                * 업로드할 수 있는 영상 크기는 10MB 이하만 가능합니다!
               </p>
 
               {error && <p style={{ color: 'red', marginTop: '6px' }}>{error}</p>}
