@@ -5,20 +5,32 @@ function FileUpload() {
   const [file, setFile] = useState(null);
   const [videoId, setVideoId] = useState('');
 
+  const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB 제한
+
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    const selectedFile = e.target.files[0];
+    if (selectedFile && selectedFile.size > MAX_FILE_SIZE) {
+      alert('업로드할 수 있는 최대 파일 크기는 10MB입니다.');
+      return;
+    }
+    setFile(selectedFile);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!file) {
+      alert('파일을 선택해주세요.');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('file', file);
 
-    const BASE_URL = process_params.env.REACT_APP_API_BASE_URL;
+    const BASE_URL = process.env.REACT_APP_API_BASE_URL; // 오타 수정: process_params ❌ → process ✅
 
     try {
-      const response = await axios.post('${BASE_URL}/api/upload', formData, {
+      const response = await axios.post(`${BASE_URL}/api/upload`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setVideoId(response.data.video_id);  // video_id를 받아옴
@@ -30,7 +42,7 @@ function FileUpload() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <input type="file" onChange={handleFileChange} />
+        <input type="file" accept="video/*" onChange={handleFileChange} />
         <button type="submit">Upload</button>
       </form>
       {videoId && <p>Video ID: {videoId}</p>}
