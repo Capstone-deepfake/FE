@@ -194,6 +194,7 @@ function Result() {
         </div>
       </div>
 
+      {/* About 팝업 */}
       {showAbout && (
         <div style={{
           position: 'fixed',
@@ -236,33 +237,47 @@ function Result() {
             >
               ✖
             </div>
-            <div style={{ maxWidth: '900px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
+            <div style={{
+              maxWidth: '900px',
+              margin: '0 auto',
+              position: 'relative',
+              zIndex: 2
+            }}>
               <h1>🔎 <span style={{ color: '#000' }}>DE-fake it</span></h1>
               <p>
-                본 시스템은 다양한 딥페이크 탐지 모델을 비교하여 정확한 판별을 제공합니다.<br />
-                아래 표는 주요 모델의 정확도와 특성을 요약한 것입니다.
+                본 시스템은 FaceForensics++와 DFDC 데이터셋을 기반으로 다양한 딥페이크 탐지 모델을 비교 분석하고,<br />
+                최종적으로 ResNeXt50과 MesoNet을 선정해 신뢰성 높은 탐지 결과를 제공합니다.<br />
+                아래 표는 모델들의 정확도와 특성을 요약한 것입니다.
               </p>
-              <table>
+              <table style={{
+                width: '100%',
+                textAlign: 'center',
+                lineHeight: '1.6',
+                borderCollapse: 'collapse'
+              }}>
                 <thead>
                   <tr>
-                    <th></th>
-                    <th>XceptionNet</th>
-                    <th>MesoNet</th>
-                    <th>EfficientNet</th>
+                    <th style={{ padding: '12px' }}></th>
+                    <th style={{ padding: '12px' }}>ResNeXt50</th>
+                    <th style={{ padding: '12px' }}>MesoNet</th>
+                    <th style={{ padding: '12px' }}>EfficientNet-B0</th>
+                    <th style={{ padding: '12px' }}>Xception</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>정확도</td>
-                    <td>91%</td>
-                    <td>84%</td>
-                    <td>88%</td>
+                    <td style={{ padding: '12px' }}>정확도</td>
+                    <td style={{ padding: '12px', fontWeight: 'bold', color: 'blue' }}>92%</td> {/* ResNeXt50 */}
+                    <td style={{ padding: '12px', fontWeight: 'bold', color: 'blue' }}>91%</td>  {/* MesoNet */}
+                    <td style={{ padding: '12px' }}>89%</td> {/* EfficientNet-B0 */}
+                    <td style={{ padding: '12px' }}>89%</td> {/* Xception */}
                   </tr>
                   <tr>
-                    <td>특징</td>
-                    <td>CNN 기반, 강력한 정확도</td>
-                    <td>경량 모델, 실시간 처리에 적합</td>
-                    <td>최적화 구조, 속도/성능 균형</td>
+                    <td style={{ padding: '12px' }}>특성</td>
+                    <td style={{ padding: '12px' }}>고성능 CNN 구조,<br />복잡한 패턴 탐지</td>
+                    <td style={{ padding: '12px' }}>경량 모델,<br />실시간 처리 최적화</td>
+                    <td style={{ padding: '12px' }}>효율적 구조,<br />연산량 대비 높은 정확도</td>
+                    <td style={{ padding: '12px' }}>깊은 네트워크,<br />강력한 특징 추출</td>
                   </tr>
                 </tbody>
               </table>
@@ -270,6 +285,7 @@ function Result() {
           </div>
         </div>
       )}
+
 
       <div style={{ padding: '40px', textAlign: 'center', fontSize: '1.4rem' }}>
         <motion.div
