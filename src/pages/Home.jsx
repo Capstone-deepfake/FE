@@ -1,9 +1,11 @@
+
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Typewriter } from 'react-simple-typewriter';
 import searching from '../assets/searching.png';
-import bgImage from '../assets/intro-background.png';
+// import bgImage from '../assets/intro-background.png';
 
 const transition = { duration: 0.6 };
 
@@ -46,6 +48,11 @@ function Home() {
 
     const formData = new FormData();
     formData.append('file', file);
+
+    // ─── 디버그 로그 ───
+    console.log("🌐 Fetch 요청을 보내려는 URL:", `${process.env.REACT_APP_API_BASE_URL}/api/upload/`);
+    console.log("🌐 FormData에 담긴 file 객체:", file);
+    // ──────────────────
 
     setLoading(true);
     setError("");
